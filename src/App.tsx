@@ -1,3 +1,5 @@
+import { GridArea } from "@components/Layout/GridArea";
+
 export const App = () => {
-  return <main>Aoba</main>;
+  return <GridArea>daouigdasudusiodi</GridArea>;
 };
