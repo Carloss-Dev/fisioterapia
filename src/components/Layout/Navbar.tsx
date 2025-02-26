@@ -3,6 +3,7 @@ import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import { NavLink } from "react-router-dom";
 
 interface INavigationItemContent {
+  id: number;
   label: string;
   route?: string;
 }
@@ -20,10 +21,12 @@ const navigationItems: INavigationItem[] = [
     triggerLabel: "Cadastros",
     content: [
       {
+        id: 1,
         label: "Tags",
         route: "/dados/tags",
       },
       {
+        id: 2,
         label: "Publicos Alvos",
         route: "/dados/publico-alvo",
       },
@@ -33,8 +36,8 @@ const navigationItems: INavigationItem[] = [
 
 export const Navbar = () => {
   return (
-    <NavigationMenu.Root className="bg-primary flex h-full w-full items-center justify-center shadow-lg">
-      <NavigationMenu.List className="flex space-x-6">
+    <NavigationMenu.Root className="bg-primary flex h-full items-center justify-center">
+      <NavigationMenu.List className="flex">
         {navigationItems.map((item) => (
           <NavigationMenu.Item key={item.id} className="relative m-0">
             {item.itemLabel ? (
@@ -56,11 +59,18 @@ export const Navbar = () => {
                     aria-hidden
                   />
                 </NavigationMenu.Trigger>
-                <NavigationMenu.Content className="absolute top-10 w-40 rounded-md bg-white shadow-md">
+                <NavigationMenu.Content className="data-[motion=from-start]:animate-enter-from-right data-[motion=from-end]:animate-enter-from-left data-[motion=to-start]:animate-exit-to-right data-[motion=to-end]:animate-exit-to-left w data-[state=open]:animate-scale-in data-[state=closes]:animate-scale-out absolute top-10 w-44 rounded-md bg-white shadow-md">
+                  <Icon
+                    icon="bxs:up-arrow"
+                    className="absolute -top-2 left-6 text-white"
+                  />
                   <ul className="p-2">
                     {item.content?.map((itemContent) => (
-                      <li key={itemContent.label} className="cursor-pointer">
-                        <NavigationMenu.Link className="block rounded-md p-2 hover:bg-gray-200">
+                      <li key={itemContent.id} className="cursor-pointer">
+                        <NavigationMenu.Link
+                          asChild
+                          className="block rounded-md p-2 hover:bg-gray-200"
+                        >
                           <NavLink
                             to={itemContent.route ?? ""}
                             className="block"
