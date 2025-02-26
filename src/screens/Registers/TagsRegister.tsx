@@ -1,40 +1,73 @@
 import { Button } from "@components/Button/Button";
-import { Form } from "@components/Form/Form";
 import { Input } from "@components/Input/Input";
+import { Modal } from "@components/Modal/Modal";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { LocalStorageDB } from "@utils/localStorageDB.utils";
-import type React from "react";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
-interface ITag {
-  tag: string;
-}
+const tagSchema = z.object({
+  tag: z
+    .string()
+    .min(2, "Mínimo de 2 caracteres")
+    .max(20, "Máximo de 20 caracteres"),
+});
+
+// Nesse trecho é criada uma interface seguindo como esquema, o esquema do zod criado acima
+interface TagFormData extends z.infer<typeof tagSchema> {}
 
 export const TagsRegister = () => {
-  const localDB = new LocalStorageDB<ITag>("tags");
+  const localDB = new LocalStorageDB<TagFormData>("tags");
+  const [modal, setModal] = React.useState(false);
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<TagFormData>({
+    resolver: zodResolver(tagSchema),
+  });
 
-    console.log("aoba");
-
-    localDB.create({
-      tag: "aoba",
-    });
+  function onSubmit(data: TagFormData) {
+    localDB.create(data);
+    setModal(false);
+    reset();
   }
 
   return (
     <section className="col-span-12 flex justify-center p-8">
-      <Form onSubmit={handleSubmit}>
-        <Input
-          label="Tag"
-          type="text"
-          id="name"
-          placeholder="Digite a Tag"
-          className="w-80"
-        />
-        <Button type="submit" className="h-10">
-          Cadastrar
-        </Button>
-      </Form>
+      <Modal
+        active={modal}
+        setActive={setModal}
+        title="Cadastrar Tags"
+        description="Formulário para cadastro de tags"
+        modalButton={<Button className="h-10 w-60">Abrir Modal</Button>}
+        content={
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-col justify-center gap-4"
+          >
+            <div className="flex flex-col">
+              <Input
+                label="Tag"
+                type="text"
+                id="tag"
+                register={register}
+                errors={errors?.tag}
+                placeholder="Digite a Tag"
+                className="w-full"
+                {...register("tag")}
+              />
+            </div>
+
+            <Button type="submit" className="mt-6 h-10 w-60 self-end">
+              Cadastrar
+            </Button>
+          </form>
+        }
+      />
     </section>
   );
 };

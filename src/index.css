@@ -7,8 +7,31 @@
   --color-secondary: #a5b4fc;
 
   --font-roboto: "Roboto", sans-serif;
+  /*? Animações utilizadas no modal */
+  --animate-overlay-show: overlay-show 0.1.5s ease-in;
+  --animate-content-show: content-show 0.2s ease-in;
 
-  /*? Animações utilizadas noo navbar */
+  @keyframes overlay-show {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes content-show {
+    from {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /*? Animações utilizadas no navbar */
   --animate-enter-from-right: enter-from-right 0.2.5s ease;
   --animate-enter-from-left: enter-from-left 0.2.5s ease;
   --animate-exit-to-right: exit-to-right 0.2.5s ease;
