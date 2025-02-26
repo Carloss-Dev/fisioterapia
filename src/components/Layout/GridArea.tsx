@@ -1,11 +1,11 @@
-import type { ReactNode } from "react";
+import type React from "react";
 import { Navbar } from "./Navbar";
 
-interface IGridArea {
-  children: ReactNode;
+interface IPropsGridArea {
+  children: React.ReactNode;
 }
 
-export const GridArea = ({ children }: IGridArea) => {
+export const GridArea = ({ children }: IPropsGridArea) => {
   return (
     <main className="grid h-screen w-screen grid-cols-12 grid-rows-[50px_1fr_50px] bg-white">
       <header className="col-span-12 row-span-1">
