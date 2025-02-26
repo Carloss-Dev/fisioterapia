@@ -1,8 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
 @import "tailwindcss";
 
 @theme {
   --color-primary: #6366f1;
   --color-secondary: #a5b4fc;
+
+  --font-roboto: "Roboto", sans-serif;
 
   /*? Animações utilizadas noo navbar */
   --animate-enter-from-right: enter-from-right 0.2.5s ease;
@@ -77,4 +81,8 @@
       transform: rotateX(-10deg) scale(0.95);
     }
   }
+}
+
+body {
+  @apply font-roboto;
 }

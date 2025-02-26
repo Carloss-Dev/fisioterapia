@@ -23,12 +23,28 @@ const navigationItems: INavigationItem[] = [
       {
         id: 1,
         label: "Tags",
-        route: "/dados/tags",
+        route: "/cadastro/tags",
       },
       {
         id: 2,
         label: "Publicos Alvos",
-        route: "/dados/publico-alvo",
+        route: "/cadastro/publico-alvo",
+      },
+    ],
+  },
+  {
+    id: 2,
+    triggerLabel: "Tabelas",
+    content: [
+      {
+        id: 1,
+        label: "Tags",
+        route: "/tabelas/tags",
+      },
+      {
+        id: 2,
+        label: "Publicos Alvos",
+        route: "/tabelas/publico-alvo",
       },
     ],
   },
