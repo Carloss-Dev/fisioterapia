@@ -54,7 +54,11 @@ export const TagsRegister = () => {
     reset();
   }
   function handleEdit(id: number | undefined) {
-    console.log(id);
+    if (id) {
+      const data = localDB.getById(id);
+
+      console.log(data);
+    }
   }
 
   const columnHelper = createColumnHelper<ITagFormData>();
@@ -117,6 +121,7 @@ export const TagsRegister = () => {
                 label="Tag"
                 type="text"
                 id="tag"
+                required
                 register={register}
                 errors={errors?.tag}
                 placeholder="Digite a Tag"
