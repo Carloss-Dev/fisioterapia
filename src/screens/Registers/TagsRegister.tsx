@@ -21,23 +21,13 @@ const tagSchema = z.object({
 // Nesse trecho é criada uma interface seguindo como esquema, o esquema do zod criado acima
 interface ITagFormData extends z.infer<typeof tagSchema> {}
 
+let formAction: "create" | "update" = "create";
+
 export const TagsRegister = () => {
   const localDB = new LocalStorageDB<ITagFormData>("tags");
 
-  const [modal, setModal] = React.useState(false);
-  const [tags, setTags] = React.useState<ITagFormData[]>();
-
-  React.useEffect(() => {
-    if (!modal) {
-      const DBtags = localDB.getAll();
-      setTags(DBtags);
-      return;
-    }
-  }, [localDB.getAll, modal]);
-
-  React.useEffect(() => {
-    console.log(tags);
-  }, [tags]);
+  const [modal, setModal] = React.useState<boolean>(false);
+  const [tags, setTags] = React.useState<ITagFormData[]>([]);
 
   const {
     register,
@@ -48,16 +38,51 @@ export const TagsRegister = () => {
     resolver: zodResolver(tagSchema),
   });
 
+  const refreshTags = React.useCallback(() => {
+    const DBTags = localDB.getAll();
+    setTags(DBTags);
+  }, [localDB.getAll]);
+
+  React.useEffect(() => {
+    refreshTags();
+  }, [refreshTags]);
+
   function onSubmit(data: ITagFormData) {
-    localDB.create(data);
+    if (formAction === "create") {
+      localDB.create(data);
+    }
+
+    if (formAction === "update" && data.id) {
+      localDB.update(data.id, data);
+    }
+
+    refreshTags();
     setModal(false);
     reset();
   }
-  function handleEdit(id: number | undefined) {
-    if (id) {
-      const data = localDB.getById(id);
+  function handleActions(e: React.MouseEvent, id: number | undefined) {
+    if (e.currentTarget instanceof HTMLElement) {
+      const method = e.currentTarget.dataset.action;
 
-      console.log(data);
+      if (id) {
+        switch (method) {
+          case "update": {
+            const data = localDB.getById(id);
+            setModal(true);
+            reset(data);
+            formAction = "update";
+            break;
+          }
+          case "remove":
+            localDB.remove(id);
+            break;
+
+          default:
+            console.log("Erro");
+            break;
+        }
+        refreshTags();
+      }
     }
   }
 
@@ -65,21 +90,32 @@ export const TagsRegister = () => {
 
   const columns = [
     columnHelper.accessor("tag", {
-      header: "Tag",
+      header: "Tags",
       cell: (info) => info.renderValue(),
     }),
     columnHelper.display({
       id: "actions",
       header: "Ações",
       cell: ({ row }) => (
-        <div className="flex w-fit p-2">
+        <div className="flex w-fit items-center justify-center gap-1 p-2">
           <Icon
             icon="lucide:edit"
             width="2em"
             height="2em"
             className="cursor-pointer"
-            onClick={() => handleEdit(row.original.id)}
-          />{" "}
+            title="Editar dado"
+            data-action="update"
+            onClick={(e: React.MouseEvent) => handleActions(e, row.original.id)}
+          />
+          <Icon
+            icon="pixelarticons:trash"
+            className="cursor-pointer"
+            width="2em"
+            height="2em"
+            title="Excluir dado"
+            data-action="remove"
+            onClick={(e: React.MouseEvent) => handleActions(e, row.original.id)}
+          />
         </div>
       ),
     }),
