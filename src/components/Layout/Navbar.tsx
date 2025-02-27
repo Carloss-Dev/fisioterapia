@@ -34,7 +34,7 @@ const navigationItems: INavigationItem[] = [
   },
   {
     id: 2,
-    triggerLabel: "Tabelas",
+    triggerLabel: "Componentes",
     content: [
       {
         id: 1,
@@ -43,8 +43,8 @@ const navigationItems: INavigationItem[] = [
       },
       {
         id: 2,
-        label: "Publicos Alvos",
-        route: "/tabelas/publico-alvo",
+        label: "Tabela",
+        route: "/tabela",
       },
     ],
   },
