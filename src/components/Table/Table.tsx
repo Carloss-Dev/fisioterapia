@@ -8,8 +8,9 @@ import React from "react";
 
 // Record é um tipo utilitário do TS, ele permite definirmos o tipo de uma chave e o tipo de um valor
 interface IPropsTable<T> {
-  columns: ColumnDef<T, string>[];
   data?: T[];
+  columns: ColumnDef<T, string>[];
+  titleContent?: React.ReactNode;
 }
 
 //? Exemplo de como montar a estrutura abaixo:
@@ -40,7 +41,7 @@ interface IPropsTable<T> {
 //   }),
 // ];
 
-export const Table = <T,>({ columns, data }: IPropsTable<T>) => {
+export const Table = <T,>({ columns, data, titleContent }: IPropsTable<T>) => {
   const tableColumns = React.useMemo(() => (columns ? columns : []), [columns]);
 
   const tableData = React.useMemo(
@@ -56,6 +57,9 @@ export const Table = <T,>({ columns, data }: IPropsTable<T>) => {
 
   return (
     <section className="col-span-8 h-fit w-fit rounded-lg border border-gray-200 bg-white p-4">
+      {titleContent && (
+        <div className="flex justify-end p-1">{titleContent}</div>
+      )}
       <div className="w-fit overflow-hidden rounded-lg border border-gray-300">
         <table className="min-w-full">
           <thead className="bg-gray-50">
