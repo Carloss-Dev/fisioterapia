@@ -53,6 +53,9 @@ export const TagsRegister = () => {
     setModal(false);
     reset();
   }
+  function handleEdit(id: number | undefined) {
+    console.log(id);
+  }
 
   const columnHelper = createColumnHelper<ITagFormData>();
 
@@ -71,6 +74,7 @@ export const TagsRegister = () => {
             width="2em"
             height="2em"
             className="cursor-pointer"
+            onClick={() => handleEdit(row.original.id)}
           />{" "}
         </div>
       ),
@@ -79,10 +83,25 @@ export const TagsRegister = () => {
 
   return (
     <section className="col-span-12 flex flex-col items-center justify-center gap-3 p-6">
-      <Button className="h-10 w-60" onClick={() => setModal(true)}>
-        Criar Nova Tag
-      </Button>
-      <Table data={tags ?? []} columns={columns} />
+      <Table
+        data={tags}
+        columns={columns}
+        titleContent={
+          <button
+            onClick={() => setModal(true)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                setModal(true);
+              }
+            }}
+            className="mb-3 block cursor-pointer font-bold tracking-wider text-neutral-500 underline"
+            title="Clique ou Pressione Enter"
+          >
+            {" "}
+            Cadastrar novo{" "}
+          </button>
+        }
+      />
       <Modal
         active={modal}
         setActive={setModal}
