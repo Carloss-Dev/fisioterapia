@@ -1,4 +1,5 @@
 import { GridArea } from "@components/Layout/GridArea";
+import { Table } from "@components/Table/Table";
 import { Home } from "@screens/Home";
 import { Page404 } from "@screens/Page404";
 import { TagsRegister } from "@screens/Registers/TagsRegister";
@@ -17,6 +18,7 @@ export const AppRoutes = () => {
             element={<TargetAudienceRegister />}
           />
           <Route path="/*" element={<Page404 />} />
+          <Route path="/tabela" element={<Table />} />
         </Routes>
       </GridArea>
     </BrowserRouter>
