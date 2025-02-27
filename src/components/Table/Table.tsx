@@ -8,7 +8,7 @@ import React from "react";
 
 // Record é um tipo utilitário do TS, ele permite definirmos o tipo de uma chave e o tipo de um valor
 interface IPropsTable<T> {
-  columns?: ColumnDef<T>[];
+  columns: ColumnDef<T, string>[];
   data?: T[];
 }
 
@@ -64,7 +64,7 @@ export const Table = <T,>({ columns, data }: IPropsTable<T>) => {
                 {headerGroup.headers.map((header) => (
                   <th
                     key={header.id}
-                    className="px-4 py-3 text-left text-sm font-bold tracking-wide text-gray-600"
+                    className="px-4 py-3 text-left text-lg font-bold tracking-wide text-gray-600"
                   >
                     {header.isPlaceholder
                       ? null
@@ -86,7 +86,7 @@ export const Table = <T,>({ columns, data }: IPropsTable<T>) => {
                 {row.getVisibleCells().map((cell) => (
                   <td
                     key={cell.id}
-                    className="px-4 py-3 text-sm whitespace-nowrap text-gray-700"
+                    className="text-md px-4 py-3 whitespace-nowrap text-gray-700"
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>

@@ -3,7 +3,7 @@ import { Dialog } from "radix-ui";
 import type React from "react";
 
 interface IPropsModal {
-  modalButton: React.ReactNode;
+  modalButton?: React.ReactNode;
   title?: string;
   description?: string;
   active: boolean;
