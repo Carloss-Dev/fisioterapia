@@ -18,17 +18,17 @@ interface INavigationItem {
 const navigationItems: INavigationItem[] = [
   {
     id: 1,
-    triggerLabel: "Cadastros",
+    triggerLabel: "Tabelas",
     content: [
       {
         id: 1,
         label: "Tags",
-        route: "/cadastro/tags",
+        route: "/dados/tags",
       },
       {
         id: 2,
         label: "Publicos Alvos",
-        route: "/cadastro/publico-alvo",
+        route: "/dados/publico-alvo",
       },
     ],
   },

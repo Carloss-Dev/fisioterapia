@@ -129,6 +129,7 @@ export const Table = <T,>({ columns, data, titleContent }: IPropsTable<T>) => {
             className="group flex items-center justify-center disabled:text-neutral-600"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
+            title="Ir uma página para a esquerda"
           >
             <Icon
               icon="ep:arrow-left-bold"
@@ -142,6 +143,7 @@ export const Table = <T,>({ columns, data, titleContent }: IPropsTable<T>) => {
             className="group flex items-center justify-center disabled:text-neutral-600"
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
+            title="Ir uma página para a direita"
           >
             <Icon
               icon="ep:arrow-right-bold"

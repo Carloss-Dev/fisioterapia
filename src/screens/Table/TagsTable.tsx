@@ -23,7 +23,7 @@ interface ITagFormData extends z.infer<typeof tagSchema> {}
 
 let formAction: "create" | "update" = "create";
 
-export const TagsRegister = () => {
+export const TagsTable = () => {
   const localDB = new LocalStorageDB<ITagFormData>("tags");
 
   const [modal, setModal] = React.useState<boolean>(false);
@@ -56,9 +56,10 @@ export const TagsRegister = () => {
       localDB.update(data.id, data);
     }
 
+    formAction = "create";
     refreshTags();
+    reset({ id: 0, tag: "" });
     setModal(false);
-    reset();
   }
   function handleActions(e: React.MouseEvent, id: number | undefined) {
     if (e.currentTarget instanceof HTMLElement) {
@@ -68,6 +69,8 @@ export const TagsRegister = () => {
         switch (method) {
           case "update": {
             const data = localDB.getById(id);
+            console.log(data);
+
             setModal(true);
             reset(data);
             formAction = "update";
@@ -103,7 +106,7 @@ export const TagsRegister = () => {
             width="2em"
             height="2em"
             className="cursor-pointer"
-            title="Editar dado"
+            title="Editar registro"
             data-action="update"
             onClick={(e: React.MouseEvent) => handleActions(e, row.original.id)}
           />
@@ -112,7 +115,7 @@ export const TagsRegister = () => {
             className="cursor-pointer"
             width="2em"
             height="2em"
-            title="Excluir dado"
+            title="Excluir registro"
             data-action="remove"
             onClick={(e: React.MouseEvent) => handleActions(e, row.original.id)}
           />
@@ -129,13 +132,11 @@ export const TagsRegister = () => {
         titleContent={
           <button
             onClick={() => setModal(true)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                setModal(true);
-              }
-            }}
+            onKeyDown={(e: React.KeyboardEvent) =>
+              (e.key === "Enter" || e.key === " ") && setModal(true)
+            }
             className="mb-3 block cursor-pointer font-bold tracking-wider text-neutral-500 underline"
-            title="Clique ou Pressione Enter"
+            title="Cadastrar novo registro"
           >
             {" "}
             Cadastrar novo{" "}
