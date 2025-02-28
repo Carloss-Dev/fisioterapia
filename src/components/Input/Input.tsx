@@ -37,16 +37,20 @@ export const Input = <T extends FieldValues>({
         className="text-md inline-flex justify-between font-bold tracking-wider"
       >
         {label} {required && "*"}
-        <span className="block self-end text-sm text-red-500">
-          {errors?.message}
-        </span>
+        {errors && (
+          <span className="block self-end text-sm text-red-500">
+            {errors.message}
+          </span>
+        )}
       </label>
       <input
         type={type}
         id={id}
         placeholder={placeholder}
         {...register(name, { required })}
-        className="focus:border-primary ease h-11 w-full rounded-sm border-1 border-neutral-500 p-3 text-base outline-0 transition-all duration-100 focus:shadow-md"
+        className={
+          "focus:border-primary ease h-11 w-full rounded-sm border-1 border-neutral-500 p-3 text-base outline-0 transition-all duration-100 focus:shadow-md"
+        }
       />
     </div>
   );
