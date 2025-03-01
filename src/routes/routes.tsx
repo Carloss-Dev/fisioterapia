@@ -3,11 +3,11 @@ import { Home } from "@screens/Home";
 import { Page404 } from "@screens/Page404";
 import { TagsTable } from "@screens/Table/TagsTable";
 import { TargetAudienceTable } from "@screens/Table/TargetAudienceTable";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 
 export const AppRoutes = () => {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <GridArea>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -16,6 +16,6 @@ export const AppRoutes = () => {
           <Route path="/*" element={<Page404 />} />
         </Routes>
       </GridArea>
-    </BrowserRouter>
+    </HashRouter>
   );
 };
