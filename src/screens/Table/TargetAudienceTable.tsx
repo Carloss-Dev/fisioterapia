@@ -127,7 +127,7 @@ export const TargetAudienceTable = () => {
   ];
 
   return (
-    <section className="col-span-12 flex flex-col items-center justify-center gap-3 p-6">
+    <section className="col-span-12 flex flex-col items-center justify-center gap-3 pt-6">
       <Table
         data={targetAudience}
         columns={columns}
